@@ -5,17 +5,17 @@ let circleInterval = 0;
 let circleIntervalCounter = 2;
 let circleIntervals = [];
 let gameDone = false;
+let num = 60;
 
-const target = document.getElementsByClassName("target");
-const intervalID = setInterval(getRandomInt);
 
-setTimeOut(() => {
-    clearInterval(intervalID);
-} , 10 * 1000);
 
-target.addEventListener("click", () => {
-    clearInterval(intervalID);
-});
+
+
+
+
+//target.addEventListener("click", () => {
+    //clearInterval(intervalID);
+//});
 
 function start() {
     rate = 100;
@@ -37,4 +37,24 @@ function createCircle() {
     };
 
 }
+function countDown(count) {
+    if (count >= 0){
+        var d = document.querySelector("p");
+        d.innerHTML = "Timer: " + count;
+    }
+}
+
+startButton.addEventListener("click", () => {
+    let timerCount = 61;
+    setInterval(function() { 
+        timerCount--;
+        countDown(timerCount); }, 1000);
+        
+})
+
+
+
+
+
+
 
