@@ -12,10 +12,10 @@
     cursor: pointer;
 }
 #test {
-    height: 115px;
-    width: 200px;
+    height: 190px;
+    width: 250px;
     background-color:bisque;
-    margin-top: -115px;
+    margin-top: -183px;
     margin-left: -7px;
     
 }
@@ -30,15 +30,14 @@
     animation-name: grow; 
     animation-duration: 4s;
     animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation-direction: normal;
   
 }
 
 @keyframes grow {
-  0%   {height:25px; width: 25px;}
-  25%  {height:75px; width: 75px;}
-  50%  {height:75px; width: 75px;}
-  100% {height:50px; width: 50px;}
+  0%   {height:30px; width: 30px;}
+  50%  {height:70px; width: 70px;}
+  100% {height:30px; width: 30px;}
   
 }
 

@@ -1,11 +1,7 @@
-let radius = 50;
-let rate = 1000;
 let score = 0;
-let circleInterval = 0;
-let circleIntervalCounter = 2;
-let circleIntervals = [];
 let gameDone = false;
-let num = 60;
+var movement; 
+let numTargets = 0;
 
 
 
@@ -21,19 +17,45 @@ function countDown(count) {
         var timerLabel = document.getElementById("timer")
         timerLabel.innerHTML = "Timer: " + count;
     }
+    if (count == 0){
+        gameDone = true;
+        target.style.visibility = "hidden";
+        startButton.style.visibility = "visible";
+        startButton.innerText = "RESTART!";
+    }
 }
 
 startButton.addEventListener("click", () => {
-    let timerCount = 61;
-    setInterval(function() {  
-        timerCount--;
-        countDown(timerCount); 
-    }, 1000);
-    updateScore();
-    target.style.visibility = "visible";
+    if (gameDone == false){
+        let timerCount = 60;
+        setInterval(function() {  
+            timerCount--;
+            countDown(timerCount); 
+        }, 1000);
+        updateScore();
+        target.style.visibility = "visible";
 
-    playGame();
-    setInterval(playGame, 4000);
+        playGame();
+        movement = setInterval(playGame, 4000);
+        startButton.style.visibility = "hidden";
+    }
+    else{
+        startButton.style.visibility = "hidden";
+        score = 0;
+        numTargets = 0;
+        gameDone = 0;
+        clearInterval(movement);
+        let timerCount = 60;
+        setInterval(function() {  
+            timerCount--;
+            countDown(timerCount); 
+        }, 1000);
+        updateScore();
+        target.style.visibility = "visible";
+        playGame();
+        movement = setInterval(playGame, 4000);
+        
+    }
     
     
     
@@ -46,25 +68,40 @@ function getRandomInt(max) {
 }
 
 function updateScore(){
-    var timerLabel = document.getElementById("score")
-    timerLabel.innerText = "Score: " + score;
+    var scoreLabel = document.getElementById("score")
+    scoreLabel.innerText = "Score: " + score;
+}
+function updateNumTargets(){
+    var targetLabel = document.getElementById("numTargets")
+    targetLabel.innerText = "Number of Targets: " + numTargets;   
 }
 
+function updateAccuracy(){
+    var accuracyLabel = document.getElementById("accuracy")
+    accuracyLabel.innerText = "Accuracy: " + Math.round((score/numTargets*100)) + "%";   
+}
 target.addEventListener("click",() => {
     score += 1;
     updateScore();
-    playGame()
+    clearInterval(movement);
+    playGame();
+    movement = setInterval(playGame, 4000);
+    
+    
     
 })
 
 function playGame(){
+    numTargets += 1;
+    updateNumTargets();
+    updateAccuracy();
     target.style.position = 'absolute';    
-    let yCoord = getRandomInt(window.innerWidth-130) + 65;
-    let xCoord = getRandomInt(window.innerHeight-130) + 65;
+    let yCoord = getRandomInt(window.innerWidth-150) + 75;
+    let xCoord = getRandomInt(window.innerHeight-150) + 75;
     
-    while (yCoord<130 && xCoord < 115){
-        yCoord = getRandomInt(window.innerWidth-130) + 65;
-        xCoord = getRandomInt(window.innerHeight-130) + 65;
+    while (yCoord<275 && xCoord < 265){
+        yCoord = getRandomInt(window.innerWidth-150) + 75;
+        xCoord = getRandomInt(window.innerHeight-150) + 75;
     }
     target.style.left = yCoord + "px";
     target.style.top = xCoord + "px";
