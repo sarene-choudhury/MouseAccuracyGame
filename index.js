@@ -13,44 +13,62 @@ let num = 60;
 
 
 
-//target.addEventListener("click", () => {
-    //clearInterval(intervalID);
-//});
 
-function start() {
-    rate = 100;
-    radius = 50;
-    score = 0;
 
-    circleInterval = setAndStart(createCircle, rate);
-    gameOverText.root.setAttribute('visibility', 'hidden');
-    restartButton.root.setAttribute('visibility', 'hidden');
-}
 
-function createCircle() {
-    gameDone = false;
-    let x = getRandomInt(radius, width - radius);
-    let y = getRandomInt(radius, height - radius);
-
-    c.root.onclick = function (event) {
-        c.root.remove();
-    };
-
-}
 function countDown(count) {
     if (count >= 0){
-        var d = document.querySelector("p");
-        d.innerHTML = "Timer: " + count;
+        var timerLabel = document.getElementById("timer")
+        timerLabel.innerHTML = "Timer: " + count;
     }
 }
 
 startButton.addEventListener("click", () => {
     let timerCount = 61;
-    setInterval(function() { 
+    setInterval(function() {  
         timerCount--;
-        countDown(timerCount); }, 1000);
+        countDown(timerCount); 
+    }, 1000);
+    updateScore();
+    target.style.visibility = "visible";
+
+    playGame();
+    setInterval(playGame, 4000);
+    
+    
+    
+    
         
 })
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
+function updateScore(){
+    var timerLabel = document.getElementById("score")
+    timerLabel.innerText = "Score: " + score;
+}
+
+target.addEventListener("click",() => {
+    score += 1;
+    updateScore();
+    playGame()
+    
+})
+
+function playGame(){
+    target.style.position = 'absolute';    
+    let yCoord = getRandomInt(window.innerWidth-130) + 65;
+    let xCoord = getRandomInt(window.innerHeight-130) + 65;
+    
+    while (yCoord<130 && xCoord < 115){
+        yCoord = getRandomInt(window.innerWidth-130) + 65;
+        xCoord = getRandomInt(window.innerHeight-130) + 65;
+    }
+    target.style.left = yCoord + "px";
+    target.style.top = xCoord + "px";
+}
 
 
 
